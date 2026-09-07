@@ -1,0 +1,75 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class MyString
+{
+private:
+    char* str;   // pointer to dynamically allocated character array
+
+public:
+    // Default constructor
+    MyString()
+    {
+        str = new char[1];
+        str[0] = '\0';
+        cout << "Default constructor called\n";
+    }
+
+    // Parameterized constructor
+    MyString(const char* s)
+    {
+        str = new char[strlen(s) + 1];
+        strcpy(str, s);
+        cout << "Parameterized constructor called\n";
+    }
+
+    // Copy constructor (deep copy)
+    MyString(const MyString& obj)
+    {
+        str = new char[strlen(obj.str) + 1];
+        strcpy(str, obj.str);
+        cout << "Copy constructor called (deep copy)\n";
+    }
+
+    // Destructor
+    ~MyString()
+    {
+        cout << "Destructor called for: " << str << "\n";
+        delete[] str;
+    }
+
+    // Accept a string from the user
+    void accept()
+    {
+        char temp[100];
+        cout << "Enter a string: ";
+        cin.getline(temp, 100);
+
+        delete[] str;
+        str = new char[strlen(temp) + 1];
+        strcpy(str, temp);
+    }
+
+    // Display the stored string
+    void display()
+    {
+        cout << "String = " << str << "\n";
+    }
+};
+
+int main()
+{
+    MyString s1;              // default constructor
+    s1.accept();              // read from user
+    s1.display();
+
+    MyString s2("Hello C++"); // parameterized constructor
+    s2.display();
+
+    MyString s3 = s2;         // copy constructor (deep copy)
+    s3.display();
+
+    return 0;
+}
+
